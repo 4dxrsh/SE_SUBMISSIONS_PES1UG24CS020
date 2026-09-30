@@ -1,6 +1,7 @@
-def feedback(code, guess):
+from collections import Counter
 
-    # the code, so duplicate symbols can consume the same code occurrence.
+
+def feedback(code, guess):
     exact = sum(a == b for a, b in zip(code, guess))
-    partial = sum(ch in code for ch in guess) - exact
-    return exact, partial
+    common = sum((Counter(code) & Counter(guess)).values())
+    return exact, common - exact
