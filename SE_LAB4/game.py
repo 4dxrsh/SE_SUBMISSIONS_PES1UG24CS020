@@ -32,6 +32,10 @@ class Mastermind:
             self.over = True
         return exact, partial
 
+    def show_history(self):
+        for i, (g, e, p) in enumerate(self.history, 1):
+            print(f"  {i:>2}. {g}  exact={e} partial={p}")
+
     def run(self):
         print(f"Mastermind: enter {self.length} digits from 1 to {self.symbols}. 'q' quits.")
         while not self.over:
@@ -39,11 +43,10 @@ class Mastermind:
             if raw.lower() == "q":
                 print("You quit. The code was", "".join(self.code))
                 return
-            result = self.guess(raw)
-            if result is None:
+            if self.guess(raw) is None:
                 print(f"Enter exactly {self.length} digits from 1 to {self.symbols}.")
                 continue
-            print("Exact:", result[0], " Partial:", result[1])
+            self.show_history()
         if self.won:
             print("Cracked the code!")
         else:
